@@ -1,6 +1,6 @@
 NAME = libftprintf.a
-#CC = cc
-#CFLAGS = -Wall -Wextra -Werror
+CC = cc
+CFLAGS = -Wall -Wextra -Werror
 
 SRC = \
 ft_putchar.c \
@@ -44,10 +44,10 @@ ft_strchr.o: ft_strchr.c ft_printf.h
 	$(CC) $(CFLAGS) -c ft_strchr.c -o ft_strchr.o
 
 clean:
-	$(RM) $(OBJS)
+	rm -f $(OBJS)
 
 fclean:	clean
-	$(RM) $(NAME)
+	rm -f $(NAME)
 
 re: fclean all
 
