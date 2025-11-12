@@ -17,35 +17,38 @@
 
 void	handle_signal(int sig, siginfo_t *info, void *context)
 {
-	static int		bit;
-	static char		c;
+	static int	bit;
+	static char	c;
 
 	(void)context;
 	if (sig == SIGUSR2)
 		c |= (1 << bit);
 	bit++;
-	if (bit ==  8)
+	if (bit == 8)
 	{
-		if(c == '\0')
+		if (c == '\0')
 			write(1, "\n", 1);
 		else
 			write(1, &c, 1);
-		kill(info -> si_pid, SIGUSR1);
 		bit = 0;
 		c = 0;
 	}
+	usleep(800);
+	kill(info->si_pid, SIGUSR1);
 }
-int main()
+
+int	main(void)
 {
-	struct	sigaction sa;
-	
-	ft_printf("PID: %d\n", getpid());
+	struct sigaction	sa;
+
+	write(1, "PID: ", 5);
+	ft_putnbr_fd(getpid(), 1);
+	write(1, "\n", 1);
 	sa.sa_sigaction = handle_signal;
 	sa.sa_flags = SA_SIGINFO;
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
-	while(1)
+	while (1)
 		pause();
-	return(0);
 }
