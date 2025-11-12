@@ -3,33 +3,37 @@ CC = cc
 
 SRC_SERVER = server.c
 SRC_CLIENT = client.c
-PRINTF_DIR = ./printf
+SRC_SERVER_BONUS = server_bonus.c
+SRC_CLIENT_BONUS = client_bonus.c
 LIBFT_DIR = ./libft
-PRINTF = $(PRINTF_DIR)/libftprintf.a
 LIBFT = $(LIBFT_DIR)/libft.a
 
 OBJS_SERVER = $(SRC_SERVER:.c=.o)
 OBJS_CLIENT = $(SRC_CLIENT:.c=.o)
 
+OBJS_SERVER_BONUS = $(SRC_SERVER_BONUS:.c=.o)
+OBJS_CLIENT_BONUS = $(SRC_CLIENT_BONUS:.c=.o)
 all: server client
 
-server: $(OBJS_SERVER) $(PRINTF) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS_SERVER) $(PRINTF) $(LIBFT) -o $@
+server: $(OBJS_SERVER) $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJS_SERVER) $(LIBFT) -o $@
 
-client: $(OBJS_CLIENT) $(PRINTF) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS_CLIENT) $(PRINTF) $(LIBFT) -o $@
+client: $(OBJS_CLIENT) $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJS_CLIENT) $(LIBFT) -o $@
 
-$(PRINTF):
-	make -C $(PRINTF_DIR)
+bonus: server_bonus client_bonus
 
+server_bonus: $(OBJS_SERVER_BONUS) $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJS_SERVER_BONUS) $(LIBFT) -o server
+
+client_bonus: $(OBJS_CLIENT_BONUS) $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJS_CLIENT_BONUS) $(LIBFT) -o client
 $(LIBFT):
 	make -C $(LIBFT_DIR)
 clean:
-	rm -f $(OBJS_SERVER) $(OBJS_CLIENT)
-	make -C $(PRINTF_DIR) clean
+	rm -f $(OBJS_SERVER) $(OBJS_CLIENT) $(OBJS_SERVER_BONUS) $(OBJS_CLIENT_BONUS)
 	make -C $(LIBFT_DIR) clean
 fclean: clean
 	rm -f server client
-	make -C $(PRINTF_DIR) fclean
 	make -C $(LIBFT_DIR) fclean
 re: fclean all

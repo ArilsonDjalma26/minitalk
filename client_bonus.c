@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalbano <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 07:35:14 by aalbano           #+#    #+#             */
-/*   Updated: 2025/11/12 13:09:59 by aalbano          ###   ########.fr       */
+/*   Updated: 2025/11/12 13:09:26 by aalbano          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	send_signal(int pid, char c)
 			pause();
 		usleep (800);
 		i++;
-	}
+	}	
 }
 
 static int	is_valid_pid(const char *s)
@@ -77,9 +77,9 @@ int	main(int ac, char **av)
 		write (2, "PID inválido!\n", 15);
 		return (1);
 	}
+	signal (SIGUSR1, handle_ack);
 	if (!check_pid(pid))
 		return (write(2, "Erro: PID inválido ou servidor inativo.\n", 41), 1);
-	signal (SIGUSR1, handle_ack);
 	msg = av[2];
 	while (*msg)
 		send_signal(pid, *msg++);
