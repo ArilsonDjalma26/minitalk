@@ -25,14 +25,10 @@ void	handle_signal(int sig, siginfo_t *info, void *context)
 	bit++;
 	if (bit == 8)
 	{
-		if (c == '\0')
-			write(1, "\n", 1);
-		else
-			write(1, &c, 1);
+		write(1, &c, 1);
 		bit = 0;
 		c = 0;
 	}
-	usleep(800);
 	kill(info->si_pid, SIGUSR1);
 }
 

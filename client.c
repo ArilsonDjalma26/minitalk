@@ -36,7 +36,6 @@ void	send_signal(int pid, char c)
 			kill(pid, SIGUSR1);
 		while (!g_ack)
 			pause();
-		usleep (800);
 		i++;
 	}
 }
@@ -71,7 +70,7 @@ int	main(int ac, char **av)
 
 	if (ac != 3)
 		return (write(2, "Uso: ./client <PID> <mensagem>\n", 32), 1);
-	pid = atoi(av[1]);
+	pid = ft_atoi(av[1]);
 	if (!is_valid_pid(av[1]))
 	{
 		write (2, "PID inválido!\n", 15);

@@ -1,6 +1,8 @@
 CFLAGS = -Wall -Wextra -Werror
 CC = cc
 
+NAME1 = server
+NAME2 = client
 SRC_SERVER = server.c
 SRC_CLIENT = client.c
 SRC_SERVER_BONUS = server_bonus.c
@@ -13,12 +15,12 @@ OBJS_CLIENT = $(SRC_CLIENT:.c=.o)
 
 OBJS_SERVER_BONUS = $(SRC_SERVER_BONUS:.c=.o)
 OBJS_CLIENT_BONUS = $(SRC_CLIENT_BONUS:.c=.o)
-all: server client
+all: $(NAME1) $(NAME2)
 
-server: $(OBJS_SERVER) $(LIBFT)
+$(NAME1): $(OBJS_SERVER) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJS_SERVER) $(LIBFT) -o $@
 
-client: $(OBJS_CLIENT) $(LIBFT)
+$(NAME2): $(OBJS_CLIENT) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJS_CLIENT) $(LIBFT) -o $@
 
 bonus: server_bonus client_bonus
